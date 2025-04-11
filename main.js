@@ -41,3 +41,19 @@ function validateCred(array) {
    }
    return sum % 100 === 0;
 }
+
+function findInvalidCards(nestedArray){
+    const invalidCards = [];
+
+    for(i = 0; i < nestedArray.length; i++) {
+        const card = nestedArray[i];
+
+        if(!validateCred(card)) {
+            invalidCards.push(card);
+        }
+
+        }
+        return invalidCards;
+    }
+
+    
