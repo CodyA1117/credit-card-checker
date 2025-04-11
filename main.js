@@ -23,49 +23,46 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3];
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5];
 
 
+// Validate credit card using Luhn Algorithm
 function validateCred(array) {
-    let sum =0;
-   for(i = 0; i < array.length -1; i--){
-        let currentValue = array[i];
-
-        if((array.length - i) % 2 === 0) {
-            currentValue *= 2;
-            if(currentValue > 9) {
-                currentValue -= 9;
-            }
+    let sum = 0;
+    for (let i = array.length - 1; i >= 0; i--) {
+      let currentValue = array[i];
+  
+      // Double every other digit starting from second-to-last
+      if ((array.length - 1 - i) % 2 === 1) {
+        currentValue *= 2;
+        if (currentValue > 9) {
+          currentValue -= 9;
         }
-
-        sum += currentValue;
-
-
-   }
-   return sum % 100 === 0;
-}
-
-function findInvalidCards(nestedArray){
-    const invalidCards = [];
-
-    for(i = 0; i < nestedArray.length; i++) {
-        const card = nestedArray[i];
-
-        if(!validateCred(card)) {
-            invalidCards.push(card);
-        }
-
-        }
-        return invalidCards;
+      }
+  
+      sum += currentValue;
     }
-
-
-function idInvalidCardCompanies(invalidNums){
+    return sum % 10 === 0; // Valid if divisible by 10
+  }
+  
+  // Find all invalid cards in a batch
+  function findInvalidCards(nestedArray) {
+    const invalidCards = [];
+    for (let i = 0; i < nestedArray.length; i++) {
+      const card = nestedArray[i];
+      if (!validateCred(card)) {
+        invalidCards.push(card); // Add invalid card to the array
+      }
+    }
+    return invalidCards;
+  }
+  
+  // Identify companies issuing invalid cards
+  function idInvalidCardCompanies(invalidNums) {
     const companies = [];
-
-    for(i = 0; i < invalidNums.length; i++){
-        const card = invalidNums[i];
-        const firstDigit = card[0];
-
-       // Check which company it belongs to
-    if (firstDigit === 3 && !companies.includes('Amex')) {
+    for (let i = 0; i < invalidNums.length; i++) {
+      const card = invalidNums[i];
+      const firstDigit = card[0];
+  
+      // Match first digit to company
+      if (firstDigit === 3 && !companies.includes('Amex')) {
         companies.push('Amex');
       } else if (firstDigit === 4 && !companies.includes('Visa')) {
         companies.push('Visa');
@@ -74,12 +71,31 @@ function idInvalidCardCompanies(invalidNums){
       } else if (firstDigit === 6 && !companies.includes('Discover')) {
         companies.push('Discover');
       } else {
-        console.log('Company not found'); 
+        console.log('Company not found'); // Handles unknown digits
       }
     }
+    return companies;
+  }
   
-    return companies; 
+  // Simple test function
+  function testMyCode() {
+    console.log("Testing validateCred():");
+    console.log("Should return true:", validateCred([4, 5, 3, 9, 6, 7, 7, 9, 0, 8, 0, 1, 6, 8, 0, 8])); // Valid card
+    console.log("Should return false:", validateCred([4, 5, 3, 2, 7, 7, 8, 7, 7, 1, 0, 9, 1, 7, 9, 5])); // Invalid card
+  
+    console.log("\nTesting findInvalidCards():");
+    const invalidCards = findInvalidCards(batch);
+    console.log("Invalid cards found:", invalidCards.length, invalidCards); // Should show invalid cards
+  
+    console.log("\nTesting idInvalidCardCompanies():");
+    const companies = idInvalidCardCompanies(invalidCards);
+    console.log("Companies issuing faulty cards:", companies); // Should show company names
+  }
+  
+  // Run the test function
+  testMyCode();
+  
 
-}
+  
 
     
