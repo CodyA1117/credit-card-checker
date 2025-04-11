@@ -21,3 +21,23 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3];
 
 // An array of all the arrays above
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5];
+
+
+function validateCred(array) {
+    let sum =0;
+   for(i = 0; i < array.length -1; i--){
+        let currentValue = array[i];
+
+        if((array.length - i) % 2 === 0) {
+            currentValue *= 2;
+            if(currentValue > 9) {
+                currentValue -= 9;
+            }
+        }
+
+        sum += currentValue;
+
+
+   }
+   return sum % 100 === 0;
+}
