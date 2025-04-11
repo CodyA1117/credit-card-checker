@@ -56,4 +56,30 @@ function findInvalidCards(nestedArray){
         return invalidCards;
     }
 
+
+function idInvalidCardCompanies(invalidNums){
+    const companies = [];
+
+    for(i = 0; i < invalidNums.length; i++){
+        const card = invalidNums[i];
+        const firstDigit = card[0];
+
+       // Check which company it belongs to
+    if (firstDigit === 3 && !companies.includes('Amex')) {
+        companies.push('Amex');
+      } else if (firstDigit === 4 && !companies.includes('Visa')) {
+        companies.push('Visa');
+      } else if (firstDigit === 5 && !companies.includes('Mastercard')) {
+        companies.push('Mastercard');
+      } else if (firstDigit === 6 && !companies.includes('Discover')) {
+        companies.push('Discover');
+      } else {
+        console.log('Company not found'); 
+      }
+    }
+  
+    return companies; 
+
+}
+
     
